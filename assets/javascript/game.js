@@ -58,7 +58,7 @@ function checkGuess() {
 			winningSound.play();
 			document.getElementById('gif').innerHTML = "<img src=" + winningGif + ">";
 			lastWord = currentWord;
-			document.getElementById('lastWord').innerHTML = "Last Word: " + displayWord;
+			revealLastWord();
 			startGame();
 		}
 		else {
@@ -72,7 +72,7 @@ function checkGuess() {
 		numOfGuesses--;
 		if (numOfGuesses == 0) {
 			michael_scott.play();
-			document.getElementById('lastWord').innerHTML = "Last Word: " + displayWord;
+			revealLastWord();
 			startGame();
 		}
 		else {
@@ -94,6 +94,14 @@ function displayCorrectGuess() {
 	}
 }
 
+function revealLastWord() {
+	displayWord = "";
+	for (i = 0; i < currentWord.length - 1; i++) {
+		displayWord += currentWord.substr(i, 1) + " ";
+	}
+	displayWord += currentWord.substr(currentWord.length - 1);
+	document.getElementById('lastWord').innerHTML = "Last Word: " + displayWord;
+}
 
 function updateDisplayWord() {
 	displayWord = hiddenWord.substr(0, 1);
