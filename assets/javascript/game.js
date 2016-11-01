@@ -64,15 +64,15 @@ function checkGuess() {
 	}
 
 	else if ((guessedLetters.indexOf(guess) == -1) && (currentWord.indexOf(guess) == -1)) {
-		console.log("guessedLetters  -1")
 		// if the guess is incorrect
 		guessedLetters += guess + ", ";
 		numOfGuesses--;
-		idiot.play();
-		console.log(numOfGuesses);
 		if (numOfGuesses == 0) {
 			michael_scott.play();
 			startGame();
+		}
+		else {
+			idiot.play();
 		}
 	}
 }
@@ -87,16 +87,12 @@ function displayCorrectGuess() {
 			hiddenWord = hiddenWord.substr(0, i) + guess + hiddenWord.substr(i + 1);
 		}
 	}
-	console.log("hidden word " + hiddenWord);
-	console.log(hiddenWord.length);
-	console.log(currentWord.length);
 }
 
 
 function updateDisplayWord() {
 	displayWord = hiddenWord.substr(0, 1);
 	for (i = 1; i < hiddenWord.length; i++) {
-		console.log(displayWord);
 		displayWord += " " + hiddenWord.substr(i, 1);
 	}
 }
@@ -104,7 +100,6 @@ function updateDisplayWord() {
 
 document.onkeyup = function(event) {
 	guess = String.fromCharCode(event.keyCode);
-	console.log(guess);
 	if (newPage) {
 		newPage = false;
 		startGame();
