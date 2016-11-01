@@ -72,6 +72,7 @@ function checkGuess() {
 		numOfGuesses--;
 		if (numOfGuesses == 0) {
 			michael_scott.play();
+			document.getElementById('lastWord').innerHTML = "Last Word: " + displayWord;
 			startGame();
 		}
 		else {
