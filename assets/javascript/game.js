@@ -15,6 +15,7 @@ var winningSound;
 var winningGif;
 var currentWord;
 var displayWord;
+// var lastWord;
 var numOfGuesses;
 var guessedLetters;
 var wins = 0;
@@ -56,6 +57,8 @@ function checkGuess() {
 			wins++;
 			winningSound.play();
 			document.getElementById('gif').innerHTML = "<img src=" + winningGif + ">";
+			lastWord = currentWord;
+			document.getElementById('lastWord').innerHTML = "Last Word: " + displayWord;
 			startGame();
 		}
 		else {
@@ -75,6 +78,7 @@ function checkGuess() {
 			idiot.play();
 		}
 	}
+
 }
 
 
@@ -113,6 +117,7 @@ document.onkeyup = function(event) {
 	}
 
 	document.getElementById('wins').innerHTML = "" + wins;
+	// document.getElementById('lastWord').innerHTML = "Last Word: " + displayWord;
 	document.getElementById('currentWord').innerHTML = "" + displayWord;
 	document.getElementById('numOfGuesses').innerHTML = "" + numOfGuesses;
 	document.getElementById('guessedLetters').innerHTML = " " + guessedLetters;
