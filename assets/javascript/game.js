@@ -1,138 +1,3 @@
-/*
-	global vars needed
-		-array of words to be guessed
-		-string for word to be displayed (including underscores)
-		-number of guesses remaining
-		-array for letters already guessed
-		-number of wins
-	if user's guess is correct, does not get subtracted from number of guesses
-*/
-
-/*var words = ["CREEDBRATTON", "PHYLLISVANCE", "KEVINMALONE", "ANDYBERNARD", "DWIGHTSCHRUTE", "MICHAELSCOTT", "PAMHALPERT", "JIMHALPERT"];
-var sounds = ["assets/mp3/creed.m4a", "assets/mp3/phyllis.m4a", "assets/mp3/kevin.m4a", "assets/mp3/andy.m4a", "assets/mp3/dwight.m4a", "assets/mp3/michael.m4a", "assets/mp3/pam.m4a", "assets/mp3/jim.m4a"];
-var gifs = ["assets/images/creed.gif", "assets/images/phyllis.gif", "assets/images/kevin.gif", "assets/images/andy.gif", "assets/images/dwight.gif", "assets/images/michael.gif", "assets/images/pam.gif", "assets/images/jim.gif"]
-var winningSound;
-var winningGif;
-var currentWord;
-var displayWord;
-var numOfGuesses;
-var guessedLetters;
-var wins = 0;
-var newPage = true;
-var idiot = new Audio('assets/mp3/dwight_idiot.mp3');
-var nailedIt = new Audio('assets/mp3/nailed_it.mp3');
-var michael_scott = new Audio('assets/mp3/michael_scott.mp3');
-var guess;
-var hiddenWord;
-
-function startGame() {
-	var index = Math.floor(Math.random() * 8);
-	currentWord = words[index];
-	winningSound = new Audio(sounds[index]);
-	winningGif = gifs[index];
-	guessedLetters = "";
-	numOfGuesses = 12;
-	initializeDisplayWords();
-}
-
-function initializeDisplayWords () {
-	hiddenWord = "";
-	displayWord = "";
-	for (var i = 0; i < currentWord.length - 1; i++) {
-		displayWord += "_ ";
-		hiddenWord += "_";
-	}
-	displayWord += "_";
-	hiddenWord += "_";
-}
-
-
-function checkGuess() {
-	// if the guess is correct, then display the guess
-	if ((currentWord.indexOf(guess) != -1) && (hiddenWord.indexOf(guess) == -1)) {
-		displayCorrectGuess();*/
-/*		updateDisplayWord();
-		if (hiddenWord == currentWord) {
-			wins++;
-			winningSound.play();
-			document.getElementById('gif').innerHTML = "<img src=" + winningGif + ">";
-			// lastWord = currentWord;
-			revealLastWord();
-			startGame();
-		}
-		else {
-			nailedIt.play();
-		}
-	}
-
-	else if ((guessedLetters.indexOf(guess) == -1) && (currentWord.indexOf(guess) == -1)) {
-		// if the guess is incorrect
-		guessedLetters += guess + ", ";
-		numOfGuesses--;
-		if (numOfGuesses == 0) {
-			michael_scott.play();
-			revealLastWord();
-			startGame();
-		}
-		else {
-			idiot.play();
-		}
-	}
-
-}
-
-
-function displayCorrectGuess() {
-
-	// loop through the display word to display the guess at all places it exists in the current word
-	for (var i = 0; i < currentWord.length; i++) {
-		// check to see if the guess matches the current index. If so, then replace the index w/ the guess
-		if (currentWord[i] == guess) {
-			hiddenWord = hiddenWord.substr(0, i) + guess + hiddenWord.substr(i + 1);
-		}
-	}
-}
-
-function revealLastWord() {
-	displayWord = "";
-	for (var i = 0; i < currentWord.length - 1; i++) {
-		displayWord += currentWord.substr(i, 1) + " ";
-	}
-	displayWord += currentWord.substr(currentWord.length - 1);
-	document.getElementById('lastWord').innerHTML = "Last Word: " + displayWord;
-}
-
-function updateDisplayWord() {
-	displayWord = hiddenWord.substr(0, 1);
-	for (var i = 1; i < hiddenWord.length; i++) {
-		displayWord += " " + hiddenWord.substr(i, 1);
-	}
-}
-
-
-document.onkeyup = function(event) {
-	guess = String.fromCharCode(event.keyCode);
-	if (newPage) {
-		newPage = false;
-		startGame();
-	}
-
-	else {
-		// if the guess is a letter and has not already been guessed, reguardless if it was a correct guess
-		if (event.keyCode >= 65 && event.keyCode <= 90) {
-			checkGuess();
-		}
-	}
-
-	document.getElementById('wins').innerHTML = "" + wins;
-	// document.getElementById('lastWord').innerHTML = "Last Word: " + displayWord;
-	document.getElementById('currentWord').innerHTML = "" + displayWord;
-	document.getElementById('numOfGuesses').innerHTML = "" + numOfGuesses;
-	document.getElementById('guessedLetters').innerHTML = " " + guessedLetters;
-}
-*/
-
-
 // Create the game object. This contains all of the properties (i.e., variables) and methods (i.e., functions)
 var game = {
 	// these are the properties
@@ -185,22 +50,33 @@ var game = {
 	initializeDisplayWords: function () {
 		// this will be the same length as currentWord. It will be used to reveal guessed letters on displayWord later
 		this.hiddenWord = "";
-		/* 	this is used to display the user's correct guesses and the character places that have yet to be guessed
-			
-		*/
+		// 	this is used to display the user's correct guesses and the character places that have yet to be guessed
 		this.displayWord = "";
+
+		// for every index (except for the last index) in the current word, add an underscore and space to displayWord and an underscore to hiddenword
 		for ( var i = 0; i < this.currentWord.length - 1; i++ ) {
 			this.displayWord += "_ ";
 			this.hiddenWord += "_";
 		}
+		// add another underscore to the end so the display word does not end with a space
 		this.displayWord += "_";
 		this.hiddenWord += "_";
 	},
 
+
 	checkGuess: function () {
+		// if guess is correct and the user has not already guessed this letter
 		if ((this.currentWord.indexOf(this.guess) != -1) && (this.hiddenWord.indexOf(this.guess) == -1)) {
-			this.displayCorrectGuess();
+
+			// update the hidden and display words
+			this.updateHiddenWord();
 			this.updateDisplayWord();
+
+			/*
+				check to see if the user has won
+				if they have won, increment wins, play the winning sound, diplay the character's gif, reveal the last (the current) word,
+				and reset the game by calling startGame()
+			*/
 			if (this.hiddenWord == this.currentWord) {
 				this.wins++;
 				this.winningSound.play();
@@ -208,27 +84,36 @@ var game = {
 				this.revealLastWord();
 				this.startGame();
 			}
+
+			// if the user has not won this round, have Andy do his thing #nailedIt #NardDog
 			else {
 				this.nailedIt.play();
 			}
 		}
 
+		/*	the guess was incorrect and the user has not already guessed it
+			add the guess to guessedLetters, decrease the # of guesses left
+		*/
 		else if ((this.guessedLetters.indexOf(this.guess) == -1) && (this.currentWord.indexOf(this.guess) == -1)) {
 			this.guessedLetters += this.guess + ", ";
 			this.numOfGuesses--;
+
+			// if # of guesses is 0, user loses, Michael Scott screams the scream of agony, the last (current) word is revealed and the game is reset
 			if (this.numOfGuesses == 0) {
 				this.michael_scott.play();
 				this.revealLastWord();
 				this.startGame();
 			}
 
+			// Dwight reminds the user that he/she is an idiot
 			else {
 				this.idiot.play();
 			}
 		}
 	},
 
-	displayCorrectGuess: function () {
+	updateHiddenWord: function () {
+		// loop through the current word to reveal the guess in hiddenWord everywhere it appears
 		for ( var i = 0; i < this.currentWord.length; i++ ) {
 			if (this.currentWord[i] == this.guess) {
 				this.hiddenWord = this.hiddenWord.substr(0, i) + this.guess + this.hiddenWord.substr(i + 1);
@@ -236,35 +121,49 @@ var game = {
 		}
 	},
 
-	revealLastWord: function () {
-		this.displayWord = "";
-		for ( var i = 0; i < this.currentWord.length - 1; i++ ) {
-			this.displayWord += this.currentWord.substr(i, 1) + " ";
-		}
-		this.displayWord += this.currentWord.substr(this.currentWord.length - 1);
-		document.getElementById('lastWord').innerHTML = "Last Word: " + this.displayWord;
-	},
-
 	updateDisplayWord: function () {
+		// assign first character (could be letter or underscore) of hidden word
 		this.displayWord = this.hiddenWord.substr(0, 1);
+
+		// loop through hiddenWord starting at second character and put a space between each character
 		for ( var i = 1; i < this.hiddenWord.length; i++ ) {
 			this.displayWord += " " + this.hiddenWord.substr(i, 1);
 		}
+	},
+
+	revealLastWord: function () {
+		// clear displayWord
+		this.displayWord = "";
+
+		// loop through current word and add each character (except for last character) and a space to the end of displayWord
+		for ( var i = 0; i < this.currentWord.length - 1; i++ ) {
+			this.displayWord += this.currentWord.substr(i, 1) + " ";
+		}
+
+		// add final character to displayWord so that it doesn't end with a space
+		this.displayWord += this.currentWord.substr(this.currentWord.length - 1);
+		// print the word onto the page at #lastWord
+		document.getElementById('lastWord').innerHTML = "Last Word: " + this.displayWord;
 	}
+
 }
 
-// game.openingSong.play();
-
+// is triggered every time the user releases a key
 document.onkeyup = function(event) {
+	// assigns letter assigned to the key code to the guess property of game
 	game.guess = String.fromCharCode(event.keyCode);
-	console.log(game);
+	// triggered when the page is opened/reopened
 	if (game.newPage) {
+		// assign false to newPage property so that this condition is no longer triggered until page is reloaded
 		game.newPage = false;
-		// game.openingSong.pause();
+		document.getElementById('pressAnyBtn').innerHTML = "Please enter your next guess!";
+		// initialize properties by starting game
 		game.startGame();
 	}
 
+	// triggered when user has already pressed any key to begin game
 	else {
+		// only check the guess if the key pressed is a letter
 		if (event.keyCode >= 65 && event.keyCode <= 90) {
 			game.checkGuess();
 		}
